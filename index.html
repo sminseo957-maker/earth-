@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>에코루트(EcoRoot) — School Eco-Restore</title>
+<meta name="description" content="에코루트 재단 — 학생 주도의 학교 생태 복원 프로젝트 소개 및 참여 페이지" />
+<!-- Basic styles and trendy look (no external resources) -->
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --muted:#98A0A8;
+    --accent1:#7BE495; /* fresh green */
+    --accent2:#44C2FF; /* cyan */
+    --glass: rgba(255,255,255,0.06);
+    --glass-2: rgba(255,255,255,0.04);
+    --maxw:1100px;
+    --radius:14px;
+    --gap:clamp(12px,2vw,24px);
+    --ease:cubic-bezier(.2,.9,.2,1);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Helvetica Neue",Inter,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(124,255,179,0.06), transparent 8%),
+      radial-gradient(900px 500px at 90% 80%, rgba(68,194,255,0.04), transparent 12%),
+      var(--bg);
+    color:#E6EEF3;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
+
+  /* NAV */
+  header{
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(95%,1200px);
+    z-index:40;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border-radius:999px;
+    backdrop-filter: blur(8px) saturate(120%);
+    box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px;
+    text-decoration:none; color:inherit;
+  }
+  /* Inline SVG logo */
+  .logo{
+    width:46px; height:46px; flex:0 0 46px;
+    display:grid; place-items:center;
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    border-radius:10px;
+    box-shadow: 0 6px 18px rgba(11,18,32,0.6), inset 0 -6px 18px rgba(255,255,255,0.06);
+  }
+  .brand h1{font-size:16px; margin:0; letter-spacing:0.2px}
+  .brand p{font-size:11px; color:var(--muted); margin:0; margin-top:2px}
+
+  nav{display:flex; gap:8px; align-items:center}
+  nav a{
+    color:var(--muted);
+    text-decoration:none;
+    padding:8px 12px;
+    font-size:14px;
+    border-radius:999px;
+    transition:all 220ms var(--ease);
+  }
+  nav a.active, nav a:hover{ color:white; background:rgba(255,255,255,0.03) }
+
+  /* full-screen sections */
+  main{margin-top:88px}
+  section{
+    min-height:100vh;
+    display:grid;
+    align-items:center;
+    padding:clamp(28px,6vw,64px);
+    gap:var(--gap);
+  }
+  .container{ width:min(100%,var(--maxw)); margin:0 auto; }
+
+  /* Hero */
+  .hero{
+    grid-template-columns: 1fr 460px;
+    align-items:center;
+    gap:clamp(18px,4vw,48px);
+  }
+  .hero .eyebrow{ color:var(--accent1); font-weight:700; letter-spacing:0.6px; font-size:13px }
+  .hero h2{ font-size:clamp(28px,4.2vw,44px); margin:6px 0; line-height:1.02; letter-spacing:-0.6px}
+  .hero p.lead{ color:var(--muted); font-size:15px; max-width:70%}
+  .cta-row{margin-top:18px; display:flex; gap:12px; flex-wrap:wrap}
+  .btn{
+    padding:12px 18px; border-radius:12px; font-weight:700; cursor:pointer;
+    border:0; background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:#04202A; transition:transform 180ms var(--ease), box-shadow 180ms var(--ease);
+    box-shadow: 0 10px 30px rgba(68,194,255,0.08);
+  }
+  .btn.ghost{ background:transparent; color:var(--accent1); border:1px solid rgba(124,255,179,0.12); box-shadow:none }
+
+  /* hero card */
+  .hero-card{
+    background:linear-gradient(180deg,var(--glass), transparent);
+    border-radius:14px;
+    padding:18px;
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 12px 40px rgba(2,6,23,0.5);
+    min-height:300px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .stat-row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+  .stat{flex:1; min-width:110px; padding:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:10px}
+  .stat h3{margin:0; font-size:18px}
+  .stat p{margin:4px 0 0; color:var(--muted); font-size:13px}
+
+  /* Sections styling */
+  .section-title{ display:flex; align-items:end; gap:12px; margin-bottom:18px }
+  .section-title h3{margin:0; font-size:20px}
+  .section-sub{ color:var(--muted); font-size:13px }
+
+  /* 활동(핵심활동) layout */
+  .activity{
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap:28px;
+    align-items:start;
+  }
+  .card{
+    background:linear-gradient(180deg,var(--glass),var(--glass-2));
+    padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.03);
+  }
+  .timeline{ display:flex; flex-direction:column; gap:12px }
+  .step{ display:flex; gap:12px; align-items:flex-start }
+  .step .num{ min-width:36px; height:36px; border-radius:10px; background:linear-gradient(90deg,var(--accent2),var(--accent1)); color:#001517; display:grid; place-items:center; font-weight:800 }
+  .step .desc h4{ margin:0; font-size:15px }
+  .step .desc p{ margin:6px 0 0; color:var(--muted); font-size:13px }
+
+  /* Campaign participation (form + gallery) */
+  .grid-cards{ display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .post{
+    padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.02);
+  }
+  .post h4{margin:0 0 6px}
+  .post p{ color:var(--muted); font-size:13px }
+
+  /* News / Story carousel-like list */
+  .news-list{ display:flex; gap:14px; overflow:auto; padding-bottom:6px }
+  .news-card{ min-width:320px; flex:0 0 320px; border-radius:12px; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.02) }
+  .news-card img{ width:100%; height:160px; object-fit:cover; border-radius:8px }
+
+  /* Contact/donate */
+  .contact-grid{ display:grid; grid-template-columns: 1fr 380px; gap:24px; align-items:start }
+  label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px }
+  input[type=text], input[type=email], textarea, select{
+    width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04);
+    background:transparent; color:inherit;
+  }
+  textarea{ min-height:120px; resize:vertical; }
+  .muted{ color:var(--muted); font-size:13px }
+  footer{
+    padding:28px; margin-top:40px; text-align:center; color:var(--muted);
+  }
+
+  /* Reveal & scroll effects */
+  .reveal{ opacity:0; transform:translateY(12px) scale(.995); transition:opacity 700ms var(--ease), transform 700ms var(--ease) }
+  .reveal.visible{ opacity:1; transform:none }
+
+  /* responsive */
+  @media (max-width:1000px){
+    .hero{ grid-template-columns: 1fr }
+    .hero p.lead{ max-width:100% }
+    .activity{ grid-template-columns: 1fr }
+    .contact-grid{ grid-template-columns: 1fr }
+    header{ top:12px }
+  }
+  @media (max-width:560px){
+    .brand h1{ font-size:14px }
+    nav a{ display:none } /* mobile: hide nav to keep clean; we show a small menu button */
+    header{ padding:8px }
+  }
+
+  /* small helpers */
+  .small{ font-size:13px; color:var(--muted) }
+  .tag{ font-size:12px; padding:6px 8px; border-radius:999px; background:rgba(255,255,255,0.02); color:var(--muted) }
+
+  /* progress dot nav on side for desktop */
+  .side-nav{
+    position:fixed; right:24px; top:50%; transform:translateY(-50%); z-index:30;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .dot{ width:12px; height:12px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.03); cursor:pointer; transition:all 220ms var(--ease) }
+  .dot.active{ transform:scale(1.35); background:linear-gradient(90deg,var(--accent2),var(--accent1)); box-shadow:0 8px 18px rgba(11,18,32,0.6) }
+</style>
+</head>
+<body>
+
+<!-- Header / Navbar -->
+<header role="banner" aria-label="주요 내비게이션">
+  <a class="brand" href="#intro">
+    <div class="logo" aria-hidden="true">
+      <!-- simple leaf+circle svg -->
+      <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="64" height="64" rx="12" fill="white" opacity="0.06"/>
+        <path d="M44 20c-6 6-16 10-24 6 2 6 8 12 14 14 4 1 8 0 10-2 6-6 6-18 0-18z" fill="#001517" opacity="0.95"/>
+        <path d="M30 14c8 2 16 10 14 18" stroke="#001517" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div>
+      <h1>에코루트</h1>
+      <p>학생이 만드는 학교 생태 복원</p>
+    </div>
+  </a>
+
+  <nav aria-label="페이지 섹션">
+    <a href="#intro" class="navlink active">소개</a>
+    <a href="#activity" class="navlink">핵심활동</a>
+    <a href="#campaign" class="navlink">캠페인참여</a>
+    <a href="#stories" class="navlink">뉴스/스토리</a>
+    <a href="#support" class="navlink">후원/문의</a>
+  </nav>
+</header>
+
+<!-- side progress dots (desktop) -->
+<div class="side-nav" aria-hidden="false">
+  <div class="dot active" data-target="#intro" title="소개"></div>
+  <div class="dot" data-target="#activity" title="핵심활동"></div>
+  <div class="dot" data-target="#campaign" title="캠페인참여"></div>
+  <div class="dot" data-target="#stories" title="뉴스/스토리"></div>
+  <div class="dot" data-target="#support" title="후원/문의"></div>
+</div>
+
+<!-- Main content -->
+<main>
+
+  <!-- INTRO / HERO -->
+  <section id="intro" class="hero" aria-labelledby="intro-title">
+    <div class="container">
+      <div class="eyebrow reveal">에코루트 재단 • 학생 주도</div>
+      <h2 id="intro-title" class="reveal">뿌리에서 시작되는 지구의 회복</h2>
+      <p class="lead reveal">에코루트는 고등학생이 직접 설계하고 운영하는 비영리 재단입니다.
+      학교의 유휴공간을 생태 복원 지역으로 전환하여, 실천 중심의 환경교육과 지역 생태계 회복을 목표로 합니다.</p>
+
+      <div class="cta-row reveal">
+        <button class="btn" data-scroll="#activity">핵심활동 보기</button>
+        <button class="btn ghost" data-scroll="#campaign">캠페인 참여하기</button>
+      </div>
+
+      <div style="height:26px"></div>
+
+      <div class="small muted reveal">주요 성과</div>
+      <div class="stat-row reveal" style="margin-top:8px">
+        <div class="stat">
+          <h3>45+</h3>
+          <p>복원 프로젝트 수행 학교</p>
+        </div>
+        <div class="stat">
+          <h3>3,400+</h3>
+          <p>학생 참여 시간(누적, 시간)</p>
+        </div>
+        <div class="stat">
+          <h3>약 1200㎡</h3>
+          <p>자생지 복원 면적(누적)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero right card -->
+    <aside class="hero-card reveal" aria-hidden="false">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div class="tag">핵심활동</div>
+          <div style="height:8px"></div>
+          <h3 style="margin:0">School Eco-Restore</h3>
+          <p class="muted" style="margin-top:8px">학교 유휴공간을 자생지 중심으로 복원하고, 온라인으로 관리·기록합니다.</p>
+        </div>
+        <div style="text-align:right">
+          <div class="small muted">프로젝트 지도</div>
+          <div style="height:10px"></div>
+          <!-- simple placeholder "map" -->
+          <div style="width:120px;height:80px;border-radius:10px;background:linear-gradient(180deg,rgba(68,194,255,0.08),rgba(124,255,179,0.06));display:grid;place-items:center;color:#002a2f;font-weight:700">MAP</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="small muted">참여자 후기</div>
+      <div style="margin-top:8px; display:flex; gap:8px; align-items:center">
+        <img alt="avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><rect rx='10' width='48' height='48' fill='%23001412'/><circle cx='24' cy='18' r='9' fill='%23FFFFFF' opacity='0.06'/></svg>" style="width:44px;height:44px;border-radius:9px;object-fit:cover"/>
+        <div>
+          <div style="font-weight:700">김서연 (고2)</div>
+          <div class="muted" style="font-size:13px">"직접 설계하고 식재한 공간이 자라나는 걸 보는 게 가장 기억에 남아요."</div>
+        </div>
+      </div>
+
+    </aside>
+  </section>
+
+  <!-- ACTIVITY (핵심활동) -->
+  <section id="activity" aria-labelledby="activity-title" class="reveal">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h3 id="activity-title">핵심활동 — School Eco-Restore</h3>
+          <div class="section-sub">유휴공간 조사 · 설계 · 식재 · 관리의 전 과정을 학생이 수행합니다.</div>
+        </div>
+      </div>
+
+      <div class="activity">
+        <div class="card">
+          <p class="muted">활동 개요</p>
+          <h4 style="margin-top:8px">프로젝트 단계</h4>
+          <div style="height:12px"></div>
+          <div class="timeline">
+            <div class="step">
+              <div class="num">1</div>
+              <div class="desc">
+                <h4>생태 진단</h4>
+                <p class="muted">토양 pH와 수분 확인, 기존 식생 목록 작성 — 간단한 워크시트 제공.</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="num">2</div>
+              <div class="desc">
+                <h4>복원 설계</h4>
+                <p class="muted">자생종 위주 식재계획, 미니 습지 또는 벌집 서식지 디자인.</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="num">3</div>
+              <div class="desc">
+                <h4>실행 & 기록</h4>
+                <p class="muted">식재·퇴비·표지판 설치. 웹앱에 QR 코드를 등록하여 성장 기록을 공유.</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="num">4</div>
+              <div class="desc">
+                <h4>지속 관리</h4>
+                <p class="muted">학생 자율팀이 계절별 점검 및 데이터 등록. 지역 커뮤니티와 연계.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="height:18px"></div>
+          <div class="small muted">자료: 활동 가이드북(간단판), 현장 체크리스트, 식재 목록</div>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom:14px">
+            <h4 style="margin:0 0 8px">디지털 도구</h4>
+            <p class="muted" style="margin:0 0 8px">각 복원 구역에 QR 코드를 부착하고, 학생들이 스마트폰으로 접근해 생육상태·사진·메모를 등록합니다.</p>
+            <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap">
+              <div class="tag">QR 기반 현장 기록</div>
+              <div class="tag">프로젝트 위키</div>
+              <div class="tag">주간 리포트 자동화</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4 style="margin:0 0 8px">빠른 시작 키트</h4>
+            <ul class="muted" style="margin:0 0 0 18px; padding:0">
+              <li>간이 토양 검사 키트</li>
+              <li>자생식물 기본 세트(종자·모종)</li>
+              <li>현장 활동 체크리스트 PDF</li>
+            </ul>
+            <div style="height:12px"></div>
+            <button class="btn" id="download-kit">시작 키트 받기 (예시)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPAIGN / 참여 -->
+  <section id="campaign" aria-labelledby="campaign-title">
+    <div class="container">
+      <div class="section-title reveal">
+        <h3 id="campaign-title">캠페인 참여</h3>
+        <div class="section-sub">간단한 실천으로 캠페인에 참여하고, 내역을 공유하세요.</div>
+      </div>
+
+      <div class="card reveal" style="margin-bottom:18px">
+        <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <div style="flex:1;min-width:260px">
+            <h4 style="margin:6px 0 8px">#SeedTheRoot 캠페인</h4>
+            <p class="muted">자신의 학교 또는 근처 공터에 작은 화분을 심고, 웹앱에 사진과 위치(선택)를 올리면 캠페인 포인트를 적립합니다.</p>
+
+            <!-- participation form -->
+            <form id="participation-form" style="margin-top:12px">
+              <label for="name">이름 (닉네임 가능)</label>
+              <input type="text" id="name" required placeholder="예: 생태지킴이_민수" />
+              <div style="height:8px"></div>
+              <label for="story">한줄 설명</label>
+              <input type="text" id="story" placeholder="무엇을 심었나요? 예: 자생화분 3개" />
+              <div style="height:8px"></div>
+              <label for="photo">사진 (URL 입력)</label>
+              <input type="text" id="photo" placeholder="사진 URL (선택)" />
+              <div style="height:12px"></div>
+              <button class="btn" type="submit">참여 등록</button>
+            </form>
+            <div id="participation-msg" class="small muted" style="margin-top:10px"></div>
+          </div>
+
+          <div style="flex:1;min-width:260px">
+            <h4 style="margin:0 0 8px">참여 갤러리</h4>
+            <div id="gallery" class="grid-cards">
+              <!-- dynamic posts -->
+              <div class="post"><h4>예시 포스트</h4><p class="muted">참여자가 등록한 사진과 한줄 설명이 여기에 표시됩니다.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="small muted reveal">참여는 무료이며, 개인 정보는 익명으로 처리됩니다. 학교 단체 참여는 별도 신청을 통해 진행.</div>
+    </div>
+  </section>
+
+  <!-- STORIES / NEWS -->
+  <section id="stories" aria-labelledby="stories-title">
+    <div class="container">
+      <div class="section-title reveal">
+        <h3 id="stories-title">뉴스 & 스토리</h3>
+        <div class="section-sub">현장 레포트와 계절별 리포트, 학생 인터뷰를 확인하세요.</div>
+      </div>
+
+      <div class="news-list reveal" id="newsList" tabindex="0" aria-label="뉴스 목록">
+        <!-- sample cards -->
+        <article class="news-card">
+          <img alt="news1" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='360'><rect width='100%' height='100%' fill='%23001412'/><text x='50%' y='50%' font-size='28' text-anchor='middle' fill='%23FFFFFF' dy='.3em'>현장 레포트: 봄 심기</text></svg>">
+          <h4 style="margin-top:10px">봄철 자생화 심기 캠페인</h4>
+          <p class="muted">5개 학교에서 동시에 진행된 봄 심기 현장 레포트와 결과 요약.</p>
+        </article>
+
+        <article class="news-card">
+          <img alt="news2" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='360'><rect width='100%' height='100%' fill='%23001819'/><text x='50%' y='50%' font-size='28' text-anchor='middle' fill='%23FFFFFF' dy='.3em'>학생 인터뷰</text></svg>">
+          <h4 style="margin-top:10px">학생 리더 인터뷰: 프로젝트의 의미</h4>
+          <p class="muted">프로젝트를 이끈 학생들의 동기와 향후 계획을 들어봅니다.</p>
+        </article>
+
+        <article class="news-card">
+          <img alt="news3" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='360'><rect width='100%' height='100%' fill='%23002A21'/><text x='50%' y='50%' font-size='28' text-anchor='middle' fill='%23FFFFFF' dy='.3em'>데이터</text></svg>">
+          <h4 style="margin-top:10px">계절 리포트: 토양 회복 지표</h4>
+          <p class="muted">토양 pH와 식생 다양성 변화에 대한 계절별 리포트.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT / CONTACT -->
+  <section id="support" aria-labelledby="support-title">
+    <div class="container">
+      <div class="section-title reveal">
+        <h3 id="support-title">후원 & 문의</h3>
+        <div class="section-sub">재정 후원, 물품 기부, 학교 제휴 문의를 받습니다.</div>
+      </div>
+
+      <div class="contact-grid reveal">
+        <div class="card">
+          <h4>간단한 후원 안내</h4>
+          <p class="muted">후원금은 프로젝트 킷 제작, 자생식물 모종 구입, 지역 워크숍 운영 등에 사용됩니다.</p>
+          <div style="height:12px"></div>
+          <p class="muted"><strong>계좌 안내(예시)</strong><br/>국민은행 000-00-0000 에코루트 재단</p>
+          <div style="height:12px"></div>
+          <h4 style="margin-top:8px">자주 묻는 질문</h4>
+          <details style="margin-top:8px">
+            <summary class="small">학교 단체 참여 방법</summary>
+            <p class="muted">학교 행정팀 이메일로 신청해 주시면 프로젝트 매뉴얼과 일정표를 제공합니다.</p>
+          </details>
+          <details style="margin-top:6px">
+            <summary class="small">개인 봉사 인증</summary>
+            <p class="muted">참여 기록이 일정 기준을 충족하면 인증서(디지털)를 발급합니다.</p>
+          </details>
+        </div>
+
+        <div class="card">
+          <h4>문의 보내기</h4>
+          <form id="contact-form">
+            <label for="c-name">이름</label>
+            <input id="c-name" type="text" required placeholder="이름을 입력하세요" />
+            <div style="height:8px"></div>
+            <label for="c-email">이메일</label>
+            <input id="c-email" type="email" required placeholder="example@domain.com" />
+            <div style="height:8px"></div>
+            <label for="c-type">문의 구분</label>
+            <select id="c-type">
+              <option>후원</option>
+              <option>학교 제휴</option>
+              <option>자원봉사</option>
+              <option>기타</option>
+            </select>
+            <div style="height:8px"></div>
+            <label for="c-msg">내용</label>
+            <textarea id="c-msg" placeholder="문의 내용을 입력하세요"></textarea>
+            <div style="height:12px"></div>
+            <button class="btn" type="submit">문의 보내기</button>
+            <div id="contact-msg" class="small muted" style="margin-top:10px"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div style="margin-bottom:6px">© <strong>에코루트 (EcoRoot)</strong> — 학생 주도의 생태 복원 프로젝트</div>
+    <div class="small muted">개인정보 처리 • 이용약관 • 연락: contact@ecoroot.example</div>
+  </footer>
+
+</main>
+
+<!-- Scripts: smooth scrolling, reveal on scroll, simple client-side features -->
+<script>
+  // Utility: smooth scroll to anchors
+  document.querySelectorAll('[data-scroll]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const sel = btn.getAttribute('data-scroll');
+      const el = document.querySelector(sel);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  // Nav highlight on scroll
+  const sections = Array.from(document.querySelectorAll('main section'));
+  const navlinks = document.querySelectorAll('.navlink');
+  const dots = Array.from(document.querySelectorAll('.dot'));
+
+  function onScroll(){
+    const mid = window.innerHeight/3;
+    let current = sections[0];
+    for(const s of sections){
+      const rect = s.getBoundingClientRect();
+      if(rect.top <= mid) current = s;
+    }
+    // highlight nav
+    navlinks.forEach(a=>{
+      a.classList.toggle('active', a.getAttribute('href') === '#'+current.id);
+    });
+    dots.forEach(d=>{
+      d.classList.toggle('active', d.getAttribute('data-target') === '#'+current.id);
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // Side dots click
+  dots.forEach(d=>{
+    d.addEventListener('click', ()=> {
+      const t = document.querySelector(d.dataset.target);
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  // Reveal on scroll (intersection observer)
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(ent=>{
+      if(ent.isIntersecting){
+        ent.target.classList.add('visible');
+      }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+  // Participation form: simple local gallery (client-side only)
+  const form = document.getElementById('participation-form');
+  const gallery = document.getElementById('gallery');
+  const partMsg = document.getElementById('participation-msg');
+
+  // load saved posts from localStorage
+  const POSTS_KEY = 'ecoroot_posts_v1';
+  function loadPosts(){
+    const raw = localStorage.getItem(POSTS_KEY);
+    if(!raw) return [];
+    try{ return JSON.parse(raw) } catch(e){ return [] }
+  }
+  function savePosts(arr){ localStorage.setItem(POSTS_KEY, JSON.stringify(arr)) }
+
+  function renderPosts(){
+    const posts = loadPosts();
+    // clear except sample first child
+    gallery.innerHTML = '';
+    if(posts.length === 0){
+      gallery.innerHTML = '<div class="post"><h4>아직 등록된 참여가 없습니다.</h4><p class="muted">여러분의 참여를 기다립니다.</p></div>';
+      return;
+    }
+    posts.slice().reverse().forEach(p=>{
+      const div = document.createElement('div'); div.className='post';
+      const h = document.createElement('h4'); h.textContent = p.name;
+      const pr = document.createElement('p'); pr.className='muted';
+      pr.textContent = p.story || '한줄 소개가 없습니다.';
+      div.appendChild(h);
+      if(p.photo){
+        const img = document.createElement('img');
+        img.src = p.photo;
+        img.alt = p.name + ' 사진';
+        img.style = 'width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px';
+        div.appendChild(img);
+      }
+      div.appendChild(pr);
+      gallery.appendChild(div);
+    });
+  }
+  renderPosts();
+
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim() || '익명';
+    const story = document.getElementById('story').value.trim();
+    const photo = document.getElementById('photo').value.trim();
+    // minimal validation for URL
+    if(photo && !/^https?:\/\//i.test(photo)){
+      partMsg.textContent = '사진 URL은 https:// 또는 http:// 로 시작해야 합니다.';
+      return;
+    }
+    const posts = loadPosts();
+    posts.push({name, story, photo, created: Date.now()});
+    savePosts(posts);
+    renderPosts();
+    form.reset();
+    partMsg.textContent = '참여 등록이 완료되었습니다. 감사합니다.';
+    setTimeout(()=> partMsg.textContent = '', 4000);
+  });
+
+  // Contact form simple client validation & mock "send"
+  const contactForm = document.getElementById('contact-form');
+  const contactMsg = document.getElementById('contact-msg');
+  contactForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('c-name').value.trim();
+    const email = document.getElementById('c-email').value.trim();
+    const msg = document.getElementById('c-msg').value.trim();
+    if(!name || !email){
+      contactMsg.textContent = '이름과 이메일을 확인하세요.';
+      return;
+    }
+    contactMsg.textContent = '문의가 등록되었습니다. 감사합니다.';
+    contactForm.reset();
+    setTimeout(()=> contactMsg.textContent = '', 6000);
+  });
+
+  // download kit (example) - create a small text file and prompt download
+  document.getElementById('download-kit').addEventListener('click', ()=>{
+    const kit = [
+      '에코루트 시작 키트 예시',
+      '- 토양 pH 체크 시트 (간단)',
+      '- 추천 자생종 목록 (지역별)',
+      '- 활동 체크리스트 (초급용)'
+    ].join('\\n');
+    const blob = new Blob([kit], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'ecoroot_startkit.txt';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  // keyboard accessibility: left/right in news list scroll
+  const newsList = document.getElementById('newsList');
+  newsList.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowRight') newsList.scrollBy({left:320, behavior:'smooth'});
+    if(e.key === 'ArrowLeft') newsList.scrollBy({left:-320, behavior:'smooth'});
+  });
+
+  // initial focusable reveal for hero
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    // small stagger
+    setTimeout(()=> el.classList.add('visible'), 120 * i);
+  });
+
+  // ensure accessible skip for small screens — not shown visually
+  // final: keep window scroll handler efficient
+  let ticking = false;
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){
+      window.requestAnimationFrame(()=>{ onScroll(); ticking=false; });
+      ticking = true;
+    }
+  }, {passive:true});
+</script>
+</body>
+</html>
